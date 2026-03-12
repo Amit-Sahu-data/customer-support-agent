@@ -41,51 +41,16 @@ jobs:
         run: python knowledge_base/loader.py
 
       - name: Test classifier
-        run: |
-          python -c "
-from agents.classifier import classify_intent
-assert classify_intent('What is return policy?') == 'faq'
-assert classify_intent('Where is my order 1234?') == 'order'
-assert classify_intent('I want a refund') == 'refund'
-assert classify_intent('I am very angry!') == 'escalate'
-print('Classifier tests passed!')
-"
+        run: python tests/test_classifier.py
 
       - name: Test knowledge base
-        run: |
-          python -c "
-from knowledge_base.loader import search_faq
-result = search_faq('return policy')
-assert len(result) > 0
-print('Knowledge base test passed!')
-"
+        run: python tests/test_knowledge_base.py
 
       - name: Test database
-        run: |
-          python -c "
-from database import init_db, save_conversation, get_stats
-init_db()
-save_conversation('test', 'faq', 'FAQ Agent', 'test response', 1.0)
-stats = get_stats()
-assert stats['total'] >= 1
-print('Database test passed!')
-"
+        run: python tests/test_database.py
 
       - name: Quality gate
-        run: |
-          python -c "
-from evaluator import evaluate_response
-result = evaluate_response(
-    message='What is your return policy?',
-    response='We accept returns within 30 days.',
-    intent='faq',
-    agent_used='FAQ Agent',
-    response_time=1.0,
-    run_id=None
-)
-assert result['overall'] >= 5.0
-print('Quality gate passed! Score:', result['overall'])
-"
+        run: python tests/test_quality_gate.py
 
   notify:
     name: Notify Status
