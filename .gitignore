@@ -1,0 +1,22 @@
+# Environment
+.env
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Databases
+*.db
+conversations.db
+
+# Vector stores and models
+chromadb_faq/
+models/
+knowledge_base/faq_chunks.json
+
+# Data
+data/
+
+# OS
+.DS_Store
+Thumbs.db

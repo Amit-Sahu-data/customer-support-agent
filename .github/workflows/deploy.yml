@@ -1,0 +1,107 @@
+# .github/workflows/deploy.yml
+# CI/CD Pipeline — runs on every push to main
+# Why CI/CD?
+# - Auto-tests every code change
+# - Catches bugs before they reach users
+# - Professional practice every company uses
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Set up environment
+        run: |
+          echo "GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" >> .env
+          echo "LANGCHAIN_API_KEY=${{ secrets.LANGCHAIN_API_KEY }}" >> .env
+          echo "LANGCHAIN_TRACING_V2=true" >> .env
+          echo "LANGCHAIN_PROJECT=customer-support-agent-ci" >> .env
+          echo "LANGCHAIN_ENDPOINT=https://api.smith.langchain.com" >> .env
+
+      - name: Initialize knowledge base
+        run: python knowledge_base/loader.py
+
+      - name: Run classifier tests
+        run: python -c "
+from agents.classifier import classify_intent
+assert classify_intent('What is return policy?') == 'faq'
+assert classify_intent('Where is my order 1234?') == 'order'
+assert classify_intent('I want a refund') == 'refund'
+assert classify_intent('I am very angry!') == 'escalate'
+print('All classifier tests passed!')
+"
+
+      - name: Run knowledge base tests
+        run: python -c "
+from knowledge_base.loader import search_faq
+result = search_faq('return policy')
+assert len(result) > 0
+print('Knowledge base test passed!')
+"
+
+      - name: Run database tests
+        run: python -c "
+from database import init_db, save_conversation, get_stats
+init_db()
+save_conversation('test', 'faq', 'FAQ Agent', 'test response', 1.0)
+stats = get_stats()
+assert stats['total'] >= 1
+print('Database test passed!')
+"
+
+      - name: Quality gate check
+        run: python -c "
+from evaluator import evaluate_response
+result = evaluate_response(
+    message='What is your return policy?',
+    response='We accept returns within 30 days.',
+    intent='faq',
+    agent_used='FAQ Agent',
+    response_time=1.0,
+    run_id=None
+)
+assert result['overall'] >= 5.0, f'Quality too low: {result[\"overall\"]}'
+print(f'Quality gate passed! Score: {result[\"overall\"]}/10')
+"
+
+  notify:
+    name: Notify Status
+    runs-on: ubuntu-latest
+    needs: test
+    if: always()
+
+    steps:
+      - name: Pipeline status
+        run: |
+          if [ "${{ needs.test.result }}" == "success" ]; then
+            echo "All tests passed! Ready to deploy."
+          else
+            echo "Tests failed! Deployment blocked."
+            exit 1
+          fi

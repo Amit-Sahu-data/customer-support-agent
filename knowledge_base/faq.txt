@@ -1,0 +1,54 @@
+COMPANY: ShopEasy E-Commerce Support
+
+ORDERS:
+Q: How do I track my order?
+A: You can track your order by visiting our website, going to My Orders section, and entering your order ID. You will receive tracking updates via email automatically.
+
+Q: How long does delivery take?
+A: Standard delivery takes 5-7 business days. Express delivery takes 2-3 business days. Same day delivery is available in select cities.
+
+Q: Can I change my order after placing it?
+A: Orders can be modified within 1 hour of placing them. After 1 hour, the order goes to our warehouse and cannot be changed. Please contact support immediately if you need to change.
+
+Q: My order is delayed. What should I do?
+A: If your order is delayed beyond the expected delivery date, please wait 2 additional business days. If still not received, contact our support team with your order ID and we will investigate immediately.
+
+RETURNS AND REFUNDS:
+Q: What is the return policy?
+A: We accept returns within 30 days of delivery. Items must be unused, in original packaging, with all tags attached. Electronics can be returned within 15 days only.
+
+Q: How do I initiate a return?
+A: Go to My Orders, select the item you want to return, click Return Item, select your reason, and submit. Our team will arrange a pickup within 2-3 business days.
+
+Q: How long does a refund take?
+A: Once we receive the returned item, refunds are processed within 3-5 business days. The amount will be credited to your original payment method.
+
+Q: Can I get an instant refund?
+A: Instant refunds are available for orders paid via UPI or wallets, up to a value of Rs 5000. For higher amounts or card payments, standard refund timeline applies.
+
+Q: My refund has not arrived. What should I do?
+A: If your refund has not arrived after 7 business days, please contact support with your order ID and return tracking number. We will escalate to our finance team immediately.
+
+PAYMENTS:
+Q: What payment methods do you accept?
+A: We accept UPI, credit cards, debit cards, net banking, EMI, and cash on delivery for orders under Rs 10000.
+
+Q: My payment failed but amount was deducted. What happens?
+A: If payment failed but amount was deducted, it will automatically reverse within 5-7 business days. If not reversed, contact your bank with the transaction reference number.
+
+Q: How do I apply a coupon code?
+A: Enter your coupon code in the Promo Code field at checkout before making payment. Discount will be applied automatically.
+
+ACCOUNT:
+Q: How do I reset my password?
+A: Click Forgot Password on the login page, enter your registered email, and you will receive a reset link within 2 minutes.
+
+Q: How do I update my delivery address?
+A: Go to My Account, click Addresses, and add or edit your delivery address. Note that address cannot be changed for orders already shipped.
+
+COMPLAINTS:
+Q: I received a damaged product. What should I do?
+A: We sincerely apologize. Please take photos of the damaged product and packaging, and contact support within 48 hours of delivery. We will arrange an immediate replacement or full refund.
+
+Q: I received a wrong product. What should I do?
+A: We apologize for the inconvenience. Please contact support with your order ID and photos of the product received. We will arrange pickup of wrong item and delivery of correct item within 3 business days.

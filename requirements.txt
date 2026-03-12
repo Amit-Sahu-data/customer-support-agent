@@ -1,0 +1,14 @@
+langchain
+langchain-community
+langchain-groq
+langchain-chroma
+langgraph
+langsmith
+langchain-huggingface
+sentence-transformers
+chromadb
+streamlit
+plotly
+pandas
+python-dotenv
+pypdf
